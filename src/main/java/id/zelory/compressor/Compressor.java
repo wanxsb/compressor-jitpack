@@ -38,7 +38,7 @@ public class Compressor {
         return this;
     }
 
-    public Compressor setColorMode(bool useRgbColorMode) {
+    public Compressor setColorMode(boolean useRgbColorMode) {
         this.useRgbColorMode = useRgbColorMode;
         return this;
     }
