@@ -53,7 +53,7 @@ class ImageUtil {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         if (useRgbColorMode) {
-            options.inPreferredConfig = Bitmap.Config.RGB_565
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
         }
 
         Bitmap scaledBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
