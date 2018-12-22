@@ -19,6 +19,7 @@ public class Compressor {
     //max width and height values of the compressed image is taken as 612x816
     private int maxWidth = 612;
     private int maxHeight = 816;
+    private boolean useRgbColorMode = false;
     private Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
     private int quality = 80;
     private String destinationDirectoryPath;
@@ -34,6 +35,11 @@ public class Compressor {
 
     public Compressor setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
+        return this;
+    }
+
+    public Compressor setColorMode(bool useRgbColorMode) {
+        this.useRgbColorMode = useRgbColorMode;
         return this;
     }
 
@@ -58,11 +64,11 @@ public class Compressor {
 
     public File compressToFile(File imageFile, String compressedFileName) throws IOException {
         return ImageUtil.compressImage(imageFile, maxWidth, maxHeight, compressFormat, quality,
-                destinationDirectoryPath + File.separator + compressedFileName);
+                destinationDirectoryPath + File.separator + compressedFileName, useRgbColorMode);
     }
 
     public Bitmap compressToBitmap(File imageFile) throws IOException {
-        return ImageUtil.decodeSampledBitmapFromFile(imageFile, maxWidth, maxHeight);
+        return ImageUtil.decodeSampledBitmapFromFile(imageFile, maxWidth, maxHeight, useRgbColorMode);
     }
 
     public Flowable<File> compressToFileAsFlowable(final File imageFile) {
