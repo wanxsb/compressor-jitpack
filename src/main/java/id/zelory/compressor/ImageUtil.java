@@ -21,7 +21,7 @@ class ImageUtil {
 
     }
 
-    static File compressImage(File imageFile, int reqWidth, int reqHeight, Bitmap.CompressFormat compressFormat, int quality, String destinationPath, boolean useRgbColorMode) throws IOException {
+    static File compressImage(File imageFile, int reqWidth, int reqHeight, Bitmap.CompressFormat compressFormat, int quality, String destinationPath) throws IOException {
         FileOutputStream fileOutputStream = null;
         File file = new File(destinationPath).getParentFile();
         if (!file.exists()) {
@@ -30,7 +30,7 @@ class ImageUtil {
         try {
             fileOutputStream = new FileOutputStream(destinationPath);
             // write the compressed bitmap at the destination specified by destinationPath.
-            decodeSampledBitmapFromFile(imageFile, reqWidth, reqHeight, useRgbColorMode).compress(compressFormat, quality, fileOutputStream);
+            decodeSampledBitmapFromFile(imageFile, reqWidth, reqHeight).compress(compressFormat, quality, fileOutputStream);
         } finally {
             if (fileOutputStream != null) {
                 fileOutputStream.flush();
@@ -41,7 +41,7 @@ class ImageUtil {
         return new File(destinationPath);
     }
 
-    static Bitmap decodeSampledBitmapFromFile(File imageFile, int reqWidth, int reqHeight, boolean useRgbColorMode) throws IOException {
+    static Bitmap decodeSampledBitmapFromFile(File imageFile, int reqWidth, int reqHeight) throws IOException {
         // First decode with inJustDecodeBounds=true to check dimensions
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -52,9 +52,6 @@ class ImageUtil {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        if (useRgbColorMode) {
-            options.inPreferredConfig = Bitmap.Config.RGB_565;
-        }
 
         Bitmap scaledBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
 
